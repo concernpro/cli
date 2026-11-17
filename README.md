@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/avatar.png" alt="" width="128" height="128"></p>
+
 # concern
 
 Hire [Concern](https://concern.pro)'s engineers and verifiers from your terminal. Describe
