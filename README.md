@@ -35,16 +35,27 @@ Concern's team will write to you@acme.test with a quote. Nothing is charged and 
 
 ## Install
 
-It needs Node.js 20 or later.
+It needs Node.js 20 or later. Nothing has to be installed to use it: write
+`npx concern-cli` or `pnpm dlx concern-cli` where this page writes `concern`.
 
 ```bash
-npm install -g concern-cli
+npx concern-cli login
+```
+
+```bash
+pnpm dlx concern-cli hire
+```
+
+To have `concern` itself on hand:
+
+```bash
+pnpm add -g concern-cli
 ```
 
 Until it is published, from a clone of this repository:
 
 ```bash
-npm install && npm run build && npm link
+pnpm install && pnpm build && pnpm link --global
 ```
 
 ## Commands
@@ -135,27 +146,27 @@ dashboard until it has gone unused for sixty days. Disconnect there ends it at o
 ## Developing
 
 ```bash
-npm install
+pnpm install
 ```
 
 ```bash
-npm test
+pnpm test
 ```
 
 ```bash
-npm run typecheck
+pnpm typecheck
 ```
 
-`npm test` runs the whole CLI against `test/fake-concern.ts`, a stand-in for concern.pro
+`pnpm test` runs the whole CLI against `test/fake-concern.ts`, a stand-in for concern.pro
 that follows its rules: discovery, registration, approval, tokens that run out and are
 replaced, plans, and sending one plan twice. Node runs the TypeScript in `src/` as it is,
-so `npm run concern -- <command>` runs the CLI without a build. `npm run build` writes
-`dist/` for npm.
+so `pnpm concern <command>` runs the CLI without a build. `pnpm build` writes `dist/`,
+which is what the package publishes.
 
 To work against a copy of concern.pro on your computer:
 
 ```bash
-CONCERN_URL=http://localhost:3000 npm run concern -- login
+CONCERN_URL=http://localhost:3000 pnpm concern login
 ```
 
 ## Not built yet
