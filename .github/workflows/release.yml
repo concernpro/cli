@@ -1,0 +1,77 @@
+name: Release
+
+# Publishes the package to npm when the version in package.json is not there
+# yet: raise the version on main, and this does the rest. A push that keeps
+# the version publishes nothing.
+#
+# It runs only in concernpro/cli-source, whose secret NPM_TOKEN it uses.
+# concernpro/cli gets this file with the rest of the code, and skips it.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  # For npm's trusted publishing, once it is set up for the package: then
+  # npm takes the run's own token and NPM_TOKEN is no longer needed.
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'concernpro/cli-source'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      # The version of pnpm is the one package.json names.
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Set up Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Is this version on npm?
+        id: version
+        run: |
+          name="$(node -p "require('./package.json').name")"
+          version="$(node -p "require('./package.json').version")"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if npm view "$name@$version" version >/dev/null 2>&1; then
+            echo "$name@$version is on npm already: nothing to publish."
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "$name@$version is not on npm yet: publishing it."
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install
+        if: steps.version.outputs.published == 'false'
+        run: pnpm install --frozen-lockfile
+
+      - name: Test
+        if: steps.version.outputs.published == 'false'
+        run: pnpm test
+
+      - name: Build
+        if: steps.version.outputs.published == 'false'
+        run: pnpm build
+
+      - name: Publish
+        if: steps.version.outputs.published == 'false'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public
