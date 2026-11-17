@@ -163,3 +163,7 @@ CONCERN_URL=http://localhost:3000 npm run concern -- login
 - Paying. A request ends in a quote by email, as it does on concern.pro.
 - Other languages. The CLI speaks English. Your task goes to the team in whatever language
   you write it in.
+
+## License
+
+Apache License 2.0. See [LICENSE](LICENSE).
