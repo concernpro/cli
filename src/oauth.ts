@@ -48,8 +48,8 @@ export class OAuthError extends Error {
 }
 
 /**
- * The address of a Concern site, as an origin. https only, but for a copy of
- * the site on this computer: the tokens travel to it.
+ * The address of a Concern site, as an origin. https only, since the tokens
+ * travel to it; plain http only to this computer, where the tests run.
  */
 export function normalizeOrigin(raw: string): string {
   let url: URL;

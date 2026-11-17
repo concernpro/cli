@@ -8,8 +8,8 @@
  *   answer was lost can be sent again under the same plan id, which the
  *   server reads as the same request.
  *
- * Both are keyed by the address, so a local copy of the site and concern.pro
- * never share a sign-in.
+ * Both are keyed by the address of the site, so that the sign-ins of two
+ * addresses never mix.
  */
 import { mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";

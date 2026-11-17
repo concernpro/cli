@@ -142,12 +142,11 @@ To use another workspace, switch to it in the dashboard and run `concern login` 
 
 The CLI keeps two files in `~/.config/concern` (`%APPDATA%\concern` on Windows, or
 `$CONCERN_CONFIG_DIR`). `credentials.json` holds the tokens and is readable by you only.
-`plans.json` holds the plans, so that one can be sent again. Both are kept per site
-address, so a local copy of concern.pro never shares a sign-in with the real one.
+`plans.json` holds the plans, so that one can be sent again.
 
-`concern logout` forgets the tokens on this computer. concern.pro has no address where an
-app can end its own approval, so the approval stays listed under Integrations in the
-dashboard until it has gone unused for sixty days. Disconnect there ends it at once.
+`concern logout` forgets the tokens on this computer. To end the CLI's access to the
+workspace, Disconnect it under Integrations in the dashboard. Left unused, it ends by
+itself after sixty days.
 
 ## Developing
 
@@ -168,12 +167,6 @@ that follows its rules: discovery, registration, approval, tokens that run out a
 replaced, plans, and sending one plan twice. Node runs the TypeScript in `src/` as it is,
 so `pnpm concern <command>` runs the CLI without a build. `pnpm build` writes `dist/`,
 which is what the package publishes.
-
-To work against a copy of concern.pro on your computer:
-
-```bash
-CONCERN_URL=http://localhost:3000 pnpm concern login
-```
 
 ## Not built yet
 

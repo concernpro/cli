@@ -43,7 +43,6 @@ Options of hire:
 
 Everywhere:
   --json                     Answer as JSON on stdout, and ask nothing
-  --url <address>            Another Concern site than https://concern.pro (or CONCERN_URL)
   --no-browser               Print the sign-in address instead of opening it
   --help, -h; --version, -v
 
