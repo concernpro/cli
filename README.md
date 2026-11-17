@@ -52,6 +52,12 @@ To have `concern` itself on hand:
 pnpm add -g concern-cli
 ```
 
+Or with npm:
+
+```bash
+npm install -g concern-cli
+```
+
 Until it is published, from a clone of this repository:
 
 ```bash
