@@ -41,7 +41,7 @@ jobs:
           PUBLIC_REPO_TOKEN: ${{ secrets.PUBLIC_REPO_TOKEN }}
         run: |
           if [ -z "$PUBLIC_REPO_TOKEN" ]; then
-            echo "::error::The secret PUBLIC_REPO_TOKEN is not set: a token of concerncli with Contents and Workflows, read and write, on concernpro/cli."
+            echo "::error::The secret PUBLIC_REPO_TOKEN is not set: a token of concerncli that can push to concernpro/cli, its workflows included."
             exit 1
           fi
           git push "https://concerncli:${PUBLIC_REPO_TOKEN}@github.com/concernpro/cli.git" "HEAD:refs/heads/main"
